@@ -326,9 +326,117 @@
 ### 6. Технічні взаємодії
 
 #### 6.1. Діаграма розгортання (Deployment Diagram)
+![Діаграма розгортання компонентів системи](./deployment_diagram/deployment_diagram.png)
+
+<details>
+<summary>Переглянути PlantUML код цієї діаграми</summary>
+
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+skinparam boxPadding 10
+
+actor User
+
+node "Network Security" #LightYellow {
+    component "Cloudflare WAF / Proxy" as CF
+}
+
+node "Client-Side (Frontend)" #LightGreen {
+    component "Browser (React / Vue App)" as FE
+    interface "LocalStorage / Cookies" as Storage
+    FE ..> Storage : stores JWT
+}
+
+node "Server-Side (Backend Node)" #LightBlue {
+    node "Modular Monolith (API)" as Monolith {
+        component "Auth Module" as AuthMod
+        component "Catalog Module" as CatalogMod
+        component "Order & Cart Module" as OrderMod
+    }
+}
+
+node "Data Layer" #LightGray {
+    database "MySQL (Main DB)" as MySQL
+    database "Redis (Token Cache)" as Redis
+}
+
+node "Search Engine" #LightCyan {
+    database "Elasticsearch (Catalog & Aggregations)" as ES
+}
+
+node "Third-Party Services (External APIs)" #LightPink {
+    component "Stripe API (Payments)" as Stripe
+    component "Nova Poshta API (Logistics)" as NP
+}
+
+
+User --> CF : HTTPS Request
+CF --> FE : Page Delivery
+
+
+FE --> CF : REST API Requests
+CF --> Monolith : Proxied API Requests
+
+AuthMod --> Redis : Check/Write Refresh Token
+AuthMod --> MySQL : User Validation (Argon2)
+
+
+CatalogMod --> MySQL : Read Product Data
+CatalogMod --> ES : Sync & Search / Aggregations
+
+OrderMod --> MySQL : Create Orders \nReserve Products (FOR UPDATE)
+OrderMod --> Stripe : Initiate & Verify Payments
+OrderMod --> NP : Fetch Branch List / Waybill Request
+
+@enduml
+
+```
+</details>
 Діаграма відображає фізичне розміщення компонентів системи, використання Cloudflare для мережевого захисту та розподіл даних між реляційною БД (MySQL), кеш-шаром (Redis) та пошуковим рушієм (Elasticsearch), а також сторонніми сервісами доставки та оплати (Nova Poshta API) та (Stripe API), відповідно.
 
 #### 6.2. Життєвий цикл замовлення (Order Lifecycle State Machine)
+![Стейт-машина статусів замовлення](./state_diagram/state.png)
+
+<details>
+<summary>Переглянути  PlantUML код цієї діаграми</summary>
+
+```plantuml
+@startuml
+title Order Lifecycle State Machine (Plant Shop)
+
+[*] --> Created : Customer clicks "Pay"
+
+state Created {
+  Created : System reserves items in DB
+  Created : Waiting for payment response
+}
+
+Created --> Paid : Stripe returns "Succeeded"
+Created --> Cancelled : Stripe returns "Failed" / \nCustomer cancels / \nTimeout (15 min)
+
+state Paid {
+  Paid : Items are fully reserved
+  Paid : Warehouse notified
+}
+
+Paid --> Shipped : Warehouse ships package \nand adds Tracking Number
+
+state Shipped {
+  Shipped : Package in transit (Nova Poshta)
+}
+
+Shipped --> Delivered : Delivery status: "Received"
+Shipped --> Cancelled : Delivery failed / \nCustomer refused (Refund initiated)
+
+Delivered --> [*] : Success
+Cancelled --> [*] : Items returned to stock
+
+note right of Created : Initial state with \nDB row lock (FOR UPDATE)
+note right of Paid : Final commercial state
+@enduml
+```
+</details>
 Схема фіксує переходи статусів замовлення від створення до фінальної доставки або скасування, враховуючи логіку автоматичного повернення товару на склад у разі невдалої логістики.
 
 #### 6.3. Діаграма послідовності «Процес автентифікації користувача» (Auth Sequence Flow)
