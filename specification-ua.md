@@ -440,11 +440,120 @@ note right of Paid : Final commercial state
 Схема фіксує переходи статусів замовлення від створення до фінальної доставки або скасування, враховуючи логіку автоматичного повернення товару на склад у разі невдалої логістики.
 
 #### 6.3. Діаграма послідовності «Процес автентифікації користувача» (Auth Sequence Flow)
+![Sequence-діаграма автентифікації користувача](./auth_diagram/auth_diagram.png)
+
+<details>
+<summary>Переглянути PlantUML код цієї діаграми</summary>
+
+```plantuml
+@startuml
+autonumber
+
+actor "User"
+
+participant "Frontend"
+participant "Backend"
+participant "Database"
+participant "Redis"
+
+User -> Frontend : Enter e-mail and password
+Frontend -> Backend : POST api/v1/auth/login \n {e-mail,password}
+activate Backend
+
+Backend -> Database : SELECT id, password_hash \nFROM users \nWHERE email = {email}
+activate Database
+
+Database --> Backend : Return user data
+deactivate Database
+
+Backend -> Backend : Validate password (argon2)
+
+alt Password correct
+    Backend -> Backend : Generate Access Token (TTL 15 m) \nand Refresh Token (TTL 30 d)
+    Backend -> Redis : Save Refresh Token \nSET user_id:refresh_token (TTL 30 d) 
+    Backend --> Frontend: HTTP 200 OK \n{\n  "access_token": "...",\n  "refresh_token": "..."\n}
+    deactivate Backend
+    
+    Frontend -> Frontend : Save tokens in LocalStorage/Cookies
+    Frontend --> User: Authorization successful, \ntransfer to Catalog
+
+else Password incorrect
+    activate Backend
+    Backend --> Frontend: HTTP 401 Unauthorized \n{\n  "error": "Invalid credentials"\n}
+    deactivate Backend
+    
+    Frontend --> User: Show message \n"Wrong login or password"
+end
+deactivate Backend
+@endum
+```
+</details>
 * **Ключова логіка:** При успішному вході система генерує пару токенів (Access/Refresh). Паролі перевіряються за допомогою криптографічного алгоритму Argon2 на бекенді.
 * **Роль Redis:** Refresh-токен записується в оперативну пам'ять Redis з TTL 30 днів. Це забезпечує надшвидку перевірку та оновлення сесій без постійного навантаження на основну базу даних MySQL.
 * **Безпека:** У разі помилки (HTTP 401) система повертає уніфіковану відповідь, приховуючи від зловмиснака, що саме було введено невірно (логін чи пароль).
 
 #### 6.4. Діаграма послідовності «Оформлення замовлення та оплата» (Stripe & Checkout Flow)
+![Sequence-діаграма чекауту та Stripe](./payment_diagram/payment_uml.png)
+
+<details>
+<summary>Переглянути PlantUML код цієї діаграми</summary>
+
+```plantuml
+@startuml
+autonumber
+
+actor "User"
+
+participant "Frontend"
+participant "Backend"
+database "Database"
+participant "Stripe API"
+
+User -> Frontend: Fill payment form, \n press button "Pay"
+Frontend -> Backend: POST api/v1/orders/checkout \n{delivery_data, cart_items}
+activate Backend
+
+Backend -> Database: Open transaction \nSELECT stock_quantity \nFROM product_stocks \nWHERE id = [id] FOR UPDATE
+activate Database
+
+alt Product available
+    Backend -> Database: INSERT INTO order_reservations (TTL 15 m) \nUPDATE product_stocks
+    Database --> Backend: Successful transaction (Reserved)
+
+    Backend -> "Stripe API": Create payment session \nPOST /v1/payment_intents (amount, currency)
+    activate "Stripe API"
+    "Stripe API" --> Backend: Return payment_intent_id & client_secret
+    deactivate "Stripe API"
+    
+    Backend --> Frontend: HTTP 201 Created \n{order_id,client_secret}
+    deactivate Database
+
+    Frontend -> "Stripe API": Send data direct (Stripe Elements) \n Confirm payment {client_secret, card_data}
+    activate "Stripe API"
+    "Stripe API" -> "Stripe API": Process bank transaction
+    "Stripe API" --> Frontend: Payment status "Succeeded"
+    deactivate "Stripe API"
+
+    Frontend -> Backend: POST /api/v1/orders/{id}/confirm_payment
+    Backend -> "Stripe API": Check status \nGET /v1/payment_intents/{id}
+    activate "Stripe API"
+    "Stripe API" --> Backend: Confirm "Succeeded"
+    deactivate "Stripe API"
+    
+    Backend -> Database: UPDATE orders SET payment_status = "paid", order_status = "Paid" \nCOMMIT reserve transaction
+    Backend --> Frontend: HTTP 200 OK (Success)
+    Frontend --> User: Redirect to page /success, \nshow receipt 
+
+else Product unavailable
+    Backend -> Database: ROLLBACK transaction
+    Backend --> Frontend: HTTP 400 Bad Request \n{error: "Product out of stock"}
+    Frontend --> User: Message: "Item is out of stock"
+end
+
+deactivate Backend
+@enduml
+```
+</details>
 * **Контроль залишків (Race Condition):** Бекенд відкриває транзакцію в MySQL та блокує рядок товару за допомогою команди `FOR UPDATE`. Це гарантує, що якщо товар закінчився в ту саму мілісекунду, система зробить `ROLLBACK` і не допустить подвійного продажу.
 * **Інтеграція зі Stripe:** Сервер створює платіжну сесію та повертає `client_secret`. Фронтенд передає дані картки через Stripe Elements напряму на сервери Stripe. Це гарантує безпеку, оскільки наш бекенд взагалі не бачить і не зберігає дані банківських карт користувачів.
 
