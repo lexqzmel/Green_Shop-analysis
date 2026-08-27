@@ -15,6 +15,6 @@ Here is the high-level infrastructure map (Cloudflare WAF, Modular Monolith API,
 - **Modeling & Design:** BPMN 2.0, PlantUML (Sequence, Deployment), Figma
 
 ## Interactive Links & Live Demos
-- 📄 **[Read Full 20-Page Specification & System Requirements](./docs/specification.md)** 
-- 🎨 **[Explore UI/UX Interactive Prototype in Figma]([https://figma.com...](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=0-1&t=00kjkQDIeDVouZMJ-1)**
-- 🔌 **[Test Live API Mock Server & Postman Documentation](https://...)**
+- **[Read Full 20-Page Specification & System Requirements](./docs/specification.md)** 
+- **[Explore UI/UX Interactive Prototype in Figma]([https://figma.com...](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)**
+- **[Test Live API Mock Server & Postman Documentation](https://...)**
