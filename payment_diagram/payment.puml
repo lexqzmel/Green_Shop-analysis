@@ -1,0 +1,53 @@
+@startuml
+autonumber
+
+actor "User"
+
+participant "Frontend"
+participant "Backend"
+database "Database"
+participant "Stripe API"
+
+User -> Frontend: Fill payment form, \n press button "Pay"
+Frontend -> Backend: POST api/v1/orders/checkout \n{delivery_data, cart_items}
+activate Backend
+
+Backend -> Database: Open transaction \nSELECT stock_quantity \nFROM product_stocks \nWHERE id = [id] FOR UPDATE
+activate Database
+
+alt Product available
+    Backend -> Database: INSERT INTO order_reservations (TTL 15 m) \nUPDATE product_stocks
+    Database --> Backend: Successful transaction (Reserved)
+
+    Backend -> "Stripe API": Create payment session \nPOST /v1/payment_intents (amount, currency)
+    activate "Stripe API"
+    "Stripe API" --> Backend: Return payment_intent_id & client_secret
+    deactivate "Stripe API"
+    
+    Backend --> Frontend: HTTP 201 Created \n{order_id,client_secret}
+    deactivate Database
+
+    Frontend -> "Stripe API": Send data direct (Stripe Elements) \n Confirm payment {client_secret, card_data}
+    activate "Stripe API"
+    "Stripe API" -> "Stripe API": Process bank transaction
+    "Stripe API" --> Frontend: Payment status "Succeeded"
+    deactivate "Stripe API"
+
+    Frontend -> Backend: POST /api/v1/orders/{id}/confirm_payment
+    Backend -> "Stripe API": Check status \nGET /v1/payment_intents/{id}
+    activate "Stripe API"
+    "Stripe API" --> Backend: Confirm "Succeeded"
+    deactivate "Stripe API"
+    
+    Backend -> Database: UPDATE orders SET payment_status = "paid", order_status = "Paid" \nCOMMIT reserve transaction
+    Backend --> Frontend: HTTP 200 OK (Success)
+    Frontend --> User: Redirect to page /success, \nshow receipt 
+
+else Product unavailable
+    Backend -> Database: ROLLBACK transaction
+    Backend --> Frontend: HTTP 400 Bad Request \n{error: "Product out of stock"}
+    Frontend --> User: Message: "Item is out of stock"
+end
+
+deactivate Backend
+@enduml
