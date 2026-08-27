@@ -5,7 +5,7 @@ This project focuses on the system analysis and architectural design of a high-p
 ##  System Architecture
 Here is the high-level infrastructure map (Cloudflare WAF, Modular Monolith API, MySQL, Redis cache, and Stripe integration):
 
-![Deployment Diagram](./docs/images/deployment_diagram.png)
+![Deployment Diagram](./deployment_diagram.png)
 
 ## Technology Stack & Tools
 - **Database & Cache:** MySQL, Redis
