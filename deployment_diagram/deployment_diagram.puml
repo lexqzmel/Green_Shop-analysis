@@ -1,0 +1,59 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam boxPadding 10
+
+actor User
+
+node "Network Security" #LightYellow {
+    component "Cloudflare WAF / Proxy" as CF
+}
+
+node "Client-Side (Frontend)" #LightGreen {
+    component "Browser (React / Vue App)" as FE
+    interface "LocalStorage / Cookies" as Storage
+    FE ..> Storage : stores JWT
+}
+
+node "Server-Side (Backend Node)" #LightBlue {
+    node "Modular Monolith (API)" as Monolith {
+        component "Auth Module" as AuthMod
+        component "Catalog Module" as CatalogMod
+        component "Order & Cart Module" as OrderMod
+    }
+}
+
+node "Data Layer" #LightGray {
+    database "MySQL (Main DB)" as MySQL
+    database "Redis (Token Cache)" as Redis
+}
+
+node "Search Engine" #LightCyan {
+    database "Elasticsearch (Catalog & Aggregations)" as ES
+}
+
+node "Third-Party Services (External APIs)" #LightPink {
+    component "Stripe API (Payments)" as Stripe
+    component "Nova Poshta API (Logistics)" as NP
+}
+
+
+User --> CF : HTTPS Request
+CF --> FE : Page Delivery
+
+
+FE --> CF : REST API Requests
+CF --> Monolith : Proxied API Requests
+
+AuthMod --> Redis : Check/Write Refresh Token
+AuthMod --> MySQL : User Validation (Argon2)
+
+
+CatalogMod --> MySQL : Read Product Data
+CatalogMod --> ES : Sync & Search / Aggregations
+
+OrderMod --> MySQL : Create Orders \nReserve Products (FOR UPDATE)
+OrderMod --> Stripe : Initiate & Verify Payments
+OrderMod --> NP : Fetch Branch List / Waybill Request
+
+@enduml
+

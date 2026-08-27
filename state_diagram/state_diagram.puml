@@ -1,0 +1,33 @@
+@startuml
+title Order Lifecycle State Machine (Plant Shop)
+
+[*] --> Created : Customer clicks "Pay"
+
+state Created {
+  Created : System reserves items in DB
+  Created : Waiting for payment response
+}
+
+Created --> Paid : Stripe returns "Succeeded"
+Created --> Cancelled : Stripe returns "Failed" / \nCustomer cancels / \nTimeout (15 min)
+
+state Paid {
+  Paid : Items are fully reserved
+  Paid : Warehouse notified
+}
+
+Paid --> Shipped : Warehouse ships package \nand adds Tracking Number
+
+state Shipped {
+  Shipped : Package in transit (Nova Poshta)
+}
+
+Shipped --> Delivered : Delivery status: "Received"
+Shipped --> Cancelled : Delivery failed / \nCustomer refused (Refund initiated)
+
+Delivered --> [*] : Success
+Cancelled --> [*] : Items returned to stock
+
+note right of Created : Initial state with \nDB row lock (FOR UPDATE)
+note right of Paid : Final commercial state
+@enduml
