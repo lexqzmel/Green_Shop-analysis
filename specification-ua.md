@@ -1,6 +1,6 @@
 #  Green Shop: Повна технічна специфікація проєкту
 
-##  міст
+##  Зміст
 * [Блок 1: Бізнес-аналіз та стратегія (Business Analysis and Strategy)](#блок-1-бізнес-аналіз-та-стратегія-business-analysis-and-strategy)
   * [1. Бачення та межі продукту (Product Vision & Scope)](#1-бачення-та-межі-продукту-product-vision--scope)
   * [2. Цільова аудиторія та Персони (User Personas)](#2-цільова-аудиторія-та-персони-user-personas)
