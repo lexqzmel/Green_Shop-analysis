@@ -123,9 +123,7 @@
 
 #### 1.1 Прототип сторінки «Каталог» (Figma UI/UX) **[Інтерактивний прототип](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)**
 На інтерфейсі сторінки «Каталог» спроєктовано елементи з урахуванням потреб обох типів цільової аудиторії (новачків та досвідчених рослинників):
-
-
-<img width="1252" height="1080" alt="figma_prototype" src="https://github.com/user-attachments/assets/fafa7669-2cef-4b67-a69b-7d7af618716d" />
+![Прототип сторінки Каталог у Figma](./figma_prototype/figma_prototype.png)
 
 
 * **Хедер (Header):**
