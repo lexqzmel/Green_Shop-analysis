@@ -1,7 +1,7 @@
 #  Green Shop: Modular E-commerce Platform for Plants & Accessories
 ###  System Analysis & Architecture Design Portfolio Case Study
 
-*Documentation Language:** [🇺🇸 English Specifications](./specification-en.md) | [🇺🇦 Специфікація українською](./specification-ua.md)
+*Documentation Language:* [🇺🇸 English Specifications](./specification-en.md) | [🇺🇦 Специфікація українською](./specification-ua.md)
 
 ##  Overview
 This project focuses on the system analysis and architectural design of a high-performance e-commerce platform tailored for indoor plants and custom accessories. Engineered as a **Modular Monolith** for rapid market entry (2-month MVP), the system is strictly decoupled to ensure a seamless future migration to a microservices architecture.
