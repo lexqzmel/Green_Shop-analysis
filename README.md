@@ -1,7 +1,7 @@
 #  Green Shop: Modular E-commerce Platform for Plants & Accessories
 ###  System Analysis & Architecture Design Portfolio Case Study
 
- **English** | [Читати українською мовою](./specification-ua.md)
+*Documentation Language:** [🇺🇸 English Specifications](./specification-en.md) | [🇺🇦 Специфікація українською](./specification-ua.md)
 
 ##  Overview
 This project focuses on the system analysis and architectural design of a high-performance e-commerce platform tailored for indoor plants and custom accessories. Engineered as a **Modular Monolith** for rapid market entry (2-month MVP), the system is strictly decoupled to ensure a seamless future migration to a microservices architecture.
@@ -25,7 +25,9 @@ Here is the high-level infrastructure layout showing network security topology (
 ---
 
 ## 🔗 Interactive Links & Live Demos
-*    **[Read Full Specification & System Requirements](./specification-ua.md)** — Comprehensive technical analysis, functional matrices, and database definitions (Written in Ukrainian).
+*  **Project Specifications & System Requirements:**
+  * 🇺🇸 **[Read Full Specification (English Web View)](./specification-en.md)**
+  * 🇺🇦 **[Читати повну специфікацію (Ukrainian Web View)](./specification-ua.md)**
 *    **[Explore UI/UX Interactive Prototype in Figma](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)** — Clickable wires addressing specific user persona pain points.
 *    **[Test Live API Mock Server & Postman Documentation](https://documenter.getpostman.com/view/17765106/2sBYAuSBAz)** — Public API contract tracking edge cases, JWT auth, and repository-level business conflicts.
 
