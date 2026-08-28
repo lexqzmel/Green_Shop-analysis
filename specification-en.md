@@ -2,19 +2,19 @@
 
 ## Table of Contents
 * [Section 1: Business Analysis and Strategy](#section-1-business-analysis-and-strategy)
-* [1. Product Vision & Scope](#1-product-vision--scope)
-* [2. User Personas](#2-user-personas)
-* [3. User Stories](#3-user-stories)
-* [4. Business Goals & Requirements](#4-business-goals--requirements)
-* [5. Assumptions & Constraints](#5-assumptions--constraints)
+ * [1. Product Vision & Scope](#1-product-vision--scope)
+ * [2. User Personas](#2-user-personas)
+ * [3. User Stories](#3-user-stories)
+ * [4. Business Goals & Requirements](#4-business-goals--requirements)
+ * [5. Assumptions & Constraints](#5-assumptions--constraints)
 * [Section 2: System Analysis and Design](#section-2-system-analysis-and-design)
-* [1. Architectural Routing and Interface Structure (UI/UX Scope)](#1-architectural-routing-and-interface-structure-uiux-scope)
-* [2. Module: Catalog & Product Filtering (Functional Requirements & Use Cases)](#2-module-catalog--product-filtering-functional-requirements--use-cases)
-* [3. Use Cases](#3-use-cases)
-* [4. Non-Functional Requirements (NFR)](#4-non-functional-requirements--nfr)
-* [5. Data Model (ERD) & Database Architecture](#5-data-model-erd--database-architecture)
-* [6. Technical Interactions](#6-technical-interactions)
-* [7. API Documentation & Mock Server (Postman)](#7-api-documentation--mock-server-postman)
+ * [1. Architectural Routing and Interface Structure (UI/UX Scope)](#1-architectural-routing-and-interface-structure-uiux-scope)
+ * [2. Module: Catalog & Product Filtering (Functional Requirements & Use Cases)](#2-module-catalog--product-filtering-functional-requirements--use-cases)
+ * [3. Use Cases](#3-use-cases)
+ * [4. Non-Functional Requirements (NFR)](#4-non-functional-requirements--nfr)
+ * [5. Data Model (ERD) & Database Architecture](#5-data-model-erd--database-architecture)
+ * [6. Technical Interactions](#6-technical-interactions)
+ * [7. API Documentation & Mock Server (Postman)](#7-api-documentation--mock-server-postman)
 
 ---
 
@@ -119,7 +119,7 @@ The system implements a modular monolithic structure where the frontend interact
 * **Registration (`/register`) and Authentication (`/login`):** Screens for account creation and login.
 
 #### 1.1. Catalog Page Prototype (Figma UI/UX)
-* **[Interactive Prototype](https://figma.com)**
+* **[Interactive Prototype](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)**
 
 The elements on the "Catalog" page interface are designed taking into account the needs of both types of target audiences (beginners and experienced plant growers):
 
@@ -517,7 +517,7 @@ deactivate Backend
 ---
 
 ### 7. API Documentation & Mock Server (Postman)
-* **[Test Live API Mock Server and Postman Documentation](https://getpostman.com)** - Green Shop API public collection for simulating server responses.
+* **[Test Live API Mock Server and Postman Documentation](https://documenter.getpostman.com/view/17765106/2sBYAuSBAz)** - Green Shop API public collection for simulating server responses.
 
 The **Green Shop API** collection has been created, completely describing the REST API for an online store of houseplants and accessories. The project is designed considering modern security standards, error handling, and integration with popular third-party services (Stripe, logistics operators).
 
