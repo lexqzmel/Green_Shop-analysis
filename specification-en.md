@@ -1,20 +1,21 @@
-# Green Shop: Full Technical Project Specification
+#  Green Shop: Full Technical Project Specification
 
-## Table of Contents
+##  Table of Contents
 * [Section 1: Business Analysis and Strategy](#section-1-business-analysis-and-strategy)
- * [1. Product Vision & Scope](#1-product-vision--scope)
- * [2. User Personas](#2-user-personas)
- * [3. User Stories](#3-user-stories)
- * [4. Business Goals & Requirements](#4-business-goals--requirements)
- * [5. Assumptions & Constraints](#5-assumptions--constraints)
+  * [1. Product Vision & Scope](#1-product-vision--scope)
+  * [2. User Personas](#2-user-personas)
+  * [3. User Stories](#3-user-stories)
+  * [4. Business Goals & Requirements](#4-business-goals--requirements)
+  * [5. Assumptions & Constraints](#5-assumptions--constraints)
 * [Section 2: System Analysis and Design](#section-2-system-analysis-and-design)
- * [1. Architectural Routing and Interface Structure (UI/UX Scope)](#1-architectural-routing-and-interface-structure-uiux-scope)
- * [2. Module: Catalog & Product Filtering (Functional Requirements & Use Cases)](#2-module-catalog--product-filtering-functional-requirements--use-cases)
- * [3. Use Cases](#3-use-cases)
- * [4. Non-Functional Requirements (NFR)](#4-non-functional-requirements--nfr)
- * [5. Data Model (ERD) & Database Architecture](#5-data-model-erd--database-architecture)
- * [6. Technical Interactions](#6-technical-interactions)
- * [7. API Documentation & Mock Server (Postman)](#7-api-documentation--mock-server-postman)
+  * [1. Architectural Routing and Interface Structure (UI/UX Scope)](#1-architectural-routing-and-interface-structure-uiux-scope)
+  * [2. Module: Catalog & Product Filtering (Catalog & Filtering)](#2-module-catalog--product-filtering-catalog--filtering)
+  * [3. Use Cases](#3-use-cases)
+  * [4. Non-Functional Requirements (NFR)](#4-non-functional-requirements-nfr)
+  * [5. Data Model (ERD) & Database Architecture](#5-data-model-erd--database-architecture)
+  * [6. Technical Interactions](#6-technical-interactions)
+  * [7. API Documentation & Mock Server (Postman)](#7-api-documentation--mock-server-postman)
+
 
 ---
 
