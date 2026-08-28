@@ -25,7 +25,7 @@ Here is the high-level infrastructure layout showing network security topology (
 ---
 
 ## 🔗 Interactive Links & Live Demos
-*    **[Read Full 20-Page Specification & System Requirements](./specification-ua.md)** — Comprehensive technical analysis, functional matrices, and database definitions (Written in Ukrainian).
+*    **[Read Full Specification & System Requirements](./specification-ua.md)** — Comprehensive technical analysis, functional matrices, and database definitions (Written in Ukrainian).
 *    **[Explore UI/UX Interactive Prototype in Figma](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)** — Clickable wires addressing specific user persona pain points.
 *    **[Test Live API Mock Server & Postman Documentation](https://documenter.getpostman.com/view/17765106/2sBYAuSBAz)** — Public API contract tracking edge cases, JWT auth, and repository-level business conflicts.
 
