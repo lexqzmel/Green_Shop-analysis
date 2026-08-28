@@ -26,8 +26,8 @@ Here is the high-level infrastructure layout showing network security topology (
 
 ## 🔗 Interactive Links & Live Demos
 *    **[Read Full 20-Page Specification & System Requirements](./specification-ua.md)** — Comprehensive technical analysis, functional matrices, and database definitions (Written in Ukrainian).
-*    **[Explore UI/UX Interactive Prototype in Figma]([https://figma.com](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1))** — Clickable wires addressing specific user persona pain points.
-*    **[Test Live API Mock Server & Postman Documentation]([https://getpostman.com](https://documenter.getpostman.com/view/17765106/2sBYAuSBAz))** — Public API contract tracking edge cases, JWT auth, and repository-level business conflicts.
+*    **[Explore UI/UX Interactive Prototype in Figma](https://www.figma.com/design/M6TdfaBpb7u0eTTQ6W4zFF/PlantStore?node-id=01&t=00kjkQDIeDVouZMJ-1)** — Clickable wires addressing specific user persona pain points.
+*    **[Test Live API Mock Server & Postman Documentation](https://documenter.getpostman.com/view/17765106/2sBYAuSBAz)** — Public API contract tracking edge cases, JWT auth, and repository-level business conflicts.
 
 ---
 
@@ -36,5 +36,6 @@ If you are a Recruiter, Lead Systems Analyst, or Tech Lead interested in discuss
 
  **Volodymyr Pysmeniuk**
 
-[![Telegram](https://shields.io)](https://t.me/exqzmepvo)
-
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/exqzmepvo)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hachmardi@gmail.com)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/qr/3MSNVRK4ZBZIC1)
